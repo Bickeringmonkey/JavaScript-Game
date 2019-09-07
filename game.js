@@ -15,13 +15,29 @@ var winningScore = 100;
 // add collectable items to the game
 function addItems() {
   items = game.add.physicsGroup();
-  createItem(375, 300, 'coin');
+  createItem(375, 400, 'coin');
+  createItem(575, 425, 'poison');
+  createItem(575, 500, 'coin');
+  createItem(225, 500, 'coin');
+  createItem(150, 275, 'coin');
+  createItem(575, 275, 'coin');
+  createItem(150, 55, 'star');
+  createItem(375, 200, 'poison');
+  createItem(375, 125, 'coin');
+  createItem(575, 55, 'coin');
 }
 
 // add platforms to the game
 function addPlatforms() {
   platforms = game.add.physicsGroup();
-  platforms.create(450, 150, 'platform');
+  platforms.create(450, 550, 'platform1');
+  platforms.create(100, 550, 'platform1');
+  platforms.create(250, 450, 'platform');
+  platforms.create(55, 350, 'platform');
+  platforms.create(550, 375, 'platform');
+  platforms.create(300, 250, 'platform');
+  platforms.create(100, 125, 'platform');
+  platforms.create(475, 125, 'platform');
   platforms.setAll('body.immovable', true);
 }
 
@@ -42,8 +58,17 @@ function createBadge() {
 
 // when the player collects an item on the screen
 function itemHandler(player, item) {
-  item.kill();
-  currentScore = currentScore + 10;
+  item.kill( );
+  if(item.key === 'coin'){
+    currentScore = currentScore + 10;
+  }
+  if(item.key === 'poison'){
+    currentScore = currentScore - 10;
+  }
+  if(item.key === 'star'){
+    currentScore = currentScore + 25;
+  }
+  
   if (currentScore === winningScore) {
       createBadge();
   }
@@ -65,11 +90,14 @@ window.onload = function () {
     
     //Load images
     game.load.image('platform', 'platform_1.png');
+    game.load.image('platform1', 'platform_2.png');
     
     //Load spritesheets
-    game.load.spritesheet('player', 'chalkers.png', 48, 62);
+    game.load.spritesheet('player', 'mikethefrog.png', 32, 32);
     game.load.spritesheet('coin', 'coin.png', 36, 44);
     game.load.spritesheet('badge', 'badge.png', 42, 54);
+    game.load.spritesheet('poison', 'poison.png', 32, 32);
+    game.load.spritesheet('star', 'star.png', 32, 32);
   }
 
   // initial game set up
@@ -94,6 +122,7 @@ window.onload = function () {
   // while the game is running
   function update() {
     text.text = "SCORE: " + currentScore;
+  
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
@@ -119,7 +148,7 @@ window.onload = function () {
     if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
       player.body.velocity.y = -400;
     }
-    // when the player winw the game
+    // when the player wins the game
     if (won) {
       winningMessage.text = "YOU WIN!!!";
     }
