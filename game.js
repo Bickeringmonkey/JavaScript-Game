@@ -93,7 +93,7 @@ window.onload = function () {
     game.load.image('platform1', 'platform_2.png');
     
     //Load spritesheets
-    game.load.spritesheet('player', 'mikethefrog.png', 32, 32);
+    game.load.spritesheet('player', 'chalkers.png', 48, 62);
     game.load.spritesheet('coin', 'coin.png', 36, 44);
     game.load.spritesheet('badge', 'badge.png', 42, 54);
     game.load.spritesheet('poison', 'poison.png', 32, 32);
@@ -122,7 +122,6 @@ window.onload = function () {
   // while the game is running
   function update() {
     text.text = "SCORE: " + currentScore;
-  
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
